@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import factory from "../ethereum/factory";
-import { Card, Button, Container, Icon } from "semantic-ui-react";
+import { Card, Button, Container, Icon, Grid } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import Image from "next/image";
 import { image, cover, view } from "../styles/landing.module.css";
+import { Link } from "../routes";
 
 class CampaignIndex extends Component {
   static async getInitialProps() {
     const campaigns = await factory.methods.getDeployedCampaigns().call();
+
     return { campaigns };
   }
 
@@ -15,8 +17,9 @@ class CampaignIndex extends Component {
     const items = this.props.campaigns.map(address => {
       return {
         header: address,
-        description: <a>View Campaign</a>,
-        fluid: true,
+        description:
+          "ahjsdklashdaldjaskl;daskl;djaskdklasxmkjklasxmasklxmaskldxhjasjdashdklashnxjkasxnjkasxhbnasjklxnlaskjxnasijlcnlsajkcnjilaskcnasjklcnasjklcnjn",
+
         style: { overflowWrap: "break-word" }
       };
     });
@@ -38,21 +41,25 @@ class CampaignIndex extends Component {
               quality={100}
             />
           </div>
-          <Button
-            content="Start a Campaign"
-            style={{
-              fontSize: "40px",
-              padding: "0px",
-              backgroundColor: "#c6a551",
-              position: "absolute",
-              width: "443px",
-              height: "106px",
-              left: "273px",
-              top: "617px",
-              borderRadius: "61px"
-            }}
-            icon="add circle"
-          />
+          <Link route="/campaigns/new">
+            <a>
+              <Button
+                content="Start a Campaign"
+                style={{
+                  fontSize: "40px",
+                  padding: "0px",
+                  backgroundColor: "#c6a551",
+                  position: "absolute",
+                  width: "443px",
+                  height: "106px",
+                  left: "273px",
+                  top: "617px",
+                  borderRadius: "61px"
+                }}
+                icon="add circle"
+              />
+            </a>
+          </Link>
           <a href="#list">
             <Icon
               name="angle down"
@@ -73,7 +80,13 @@ class CampaignIndex extends Component {
             <h1 style={{ fontSize: "55px", marginTop: "20px" }}>
               List of campaigns on Danathereum{" "}
             </h1>
-            {this.renderCampaigns()}{" "}
+            <Grid style={{ marginLeft: "90px" }}>
+              {" "}
+              <Grid.Row column={3}>
+                {" "}
+                <Grid.Column>{this.renderCampaigns()}</Grid.Column>{" "}
+              </Grid.Row>
+            </Grid>
           </Container>
         </div>
       </Layout>

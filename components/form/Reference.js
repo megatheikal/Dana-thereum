@@ -2,30 +2,68 @@ import React, { Component } from "react";
 import { Form, Input } from "semantic-ui-react";
 
 class ReferenceForm extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    const value = e.target.value;
+
+    this.props.onChangeValue({
+      [e.target.name]: value
+    });
+  }
   render() {
     return (
-      <Form size="huge" style={{ width: "1000px" }}>
-        <Form.Field>
+      <div>
+        <Form.Field required>
           <label>Name</label>
-          <Input placeholder="Ali Naquiddin" />
+          <Input
+            name="nameReference"
+            placeholder="Ali Naquiddin"
+            value={this.props.nameReference}
+            onChange={this.handleChange}
+          />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label>Phone Numbers</label>
-          <Input placeholder="+601298712311" />
+          <Input
+            name="phoneReference"
+            placeholder="Ipoh Perak"
+            value={this.props.phoneReference}
+            onChange={this.handleChange}
+          />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label>Address</label>
-          <Input placeholder="No 12, Lot Ampang, Ampang" />
+          <Input
+            name="addressReference"
+            placeholder="+601298712311"
+            value={this.props.addressReference}
+            onChange={this.handleChange}
+          />
         </Form.Field>
-        <Form.Field>
+
+        <Form.Field required>
           <label>Email</label>
-          <Input placeholder="ali-nqi19@yahoo.com" />
+          <Input
+            name="emailReference"
+            placeholder="ali-nqi19@yahoo.com"
+            value={this.props.emailReference}
+            onChange={this.handleChange}
+          />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label>Link of Social Media</label>
-          <Input placeholder="twitter, instagram, facebook" />
+          <Input
+            name="linkReference"
+            placeholder="twitter, instagram, facebook"
+            value={this.props.linkReference}
+            onChange={this.handleChange}
+          />
         </Form.Field>
-      </Form>
+      </div>
     );
   }
 }

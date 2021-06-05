@@ -9,6 +9,7 @@ const compiledCampaign = require("../ethereum/build/Campaign.json");
 let accounts;
 let factory;
 let campaignAddress;
+let test;
 
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
@@ -27,6 +28,9 @@ beforeEach(async () => {
   });
 
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
+
+  test = await factory.methods.getLastDeployedCampaign.call();
+
   campaign = await new web3.eth.Contract(compiledCampaign.abi, campaignAddress);
 });
 
@@ -34,7 +38,9 @@ describe("Campaigns", () => {
   it("deploy a factory and campaign", () => {
     assert.ok(factory.options.address);
     assert.ok(campaign.options.address);
+    assert.ok(test);
   });
+
   it("factory calling address is same as organiser", async () => {
     const organiser = await campaign.methods.organiser().call();
     assert.equal(accounts[0], organiser);

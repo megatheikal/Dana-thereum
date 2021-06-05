@@ -4,18 +4,24 @@ pragma solidity >=0.8.3 ;
 
 /**
  * @title Contract
- * @dev Implements voting process along with vote delegation
+ * @dev Implements a new to donate money to the campaign
  */
 contract CampaignFactory {
     address[] public deployedCampaigns;
+    address public lastDeployedCampaign;
 
     function createCampaign(uint minimum) public {
         address newCampaign = address (new Campaign(minimum, msg.sender));
         deployedCampaigns.push(newCampaign);
+        lastDeployedCampaign = newCampaign;
     }
 
     function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
+    }
+
+    function getLastDeployedCampaign() public view returns(address){
+        return lastDeployedCampaign;
     }
 }
 

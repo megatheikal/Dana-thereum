@@ -22,12 +22,9 @@
   color: #40a9ff !important;
 }
 
-.myCheckbox {
-  transform: scale(1.4);
-  position: absolute;
-  top: px;
-  line-height: 2;
-  text-align: center;
+.myCheckbox button {
+  position: relative;
+  left: 510px;
 }
 
 .pane {
