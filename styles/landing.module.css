@@ -29,3 +29,8 @@
   color: inherit;
   text-decoration: none;
 }
+
+.list {
+  background: #ecf0f1;
+  text-align: center;
+}

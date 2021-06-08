@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import factory from "../ethereum/factory";
-import { Card, Button, Container, Icon, Grid } from "semantic-ui-react";
+import { Card, Button, Container, Icon, Grid, Header } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import Image from "next/image";
-import { image, cover, view } from "../styles/landing.module.css";
+import { image, cover, view, list } from "../styles/landing.module.css";
 import { Link } from "../routes";
 
 class CampaignIndex extends Component {
@@ -17,12 +17,20 @@ class CampaignIndex extends Component {
     const items = this.props.campaigns.map(address => {
       return {
         header: address,
-        description:
-          "ahjsdklashdaldjaskl;daskl;djaskdklasxmkjklasxmasklxmaskldxhjasjdashdklashnxjkasxnjkasxhbnasjklxnlaskjxnasijlcnlsajkcnjilaskcnasjklcnasjklcnjn",
+        description: (
+          <Link route={`/campaigns/${address}`}>
+            <a>View Campaign</a>
+          </Link>
+        ),
 
-        style: { overflowWrap: "break-word" }
+        style: {
+          overflowWrap: "break-word",
+          width: "500px",
+          marginLeft: "90px"
+        }
       };
     });
+
     return <Card.Group items={items} />;
   }
 
@@ -60,7 +68,7 @@ class CampaignIndex extends Component {
               />
             </a>
           </Link>
-          <a href="#list">
+          <a href=".list">
             <Icon
               name="angle down"
               size="massive"
@@ -75,19 +83,17 @@ class CampaignIndex extends Component {
           </a>
         </div>
 
-        <div id="list">
-          <Container textAlign="center">
-            <h1 style={{ fontSize: "55px", marginTop: "20px" }}>
-              List of campaigns on Danathereum{" "}
-            </h1>
-            <Grid style={{ marginLeft: "90px" }}>
-              {" "}
-              <Grid.Row column={3}>
-                {" "}
-                <Grid.Column>{this.renderCampaigns()}</Grid.Column>{" "}
+        <div className={list}>
+          <Header size="huge" style={{ paddingTop: "20px" }}>
+            List of campaigns on Danathereum
+          </Header>
+          <div>
+            <Grid columns={1}>
+              <Grid.Row>
+                <Grid.Column>{this.renderCampaigns()}</Grid.Column>
               </Grid.Row>
             </Grid>
-          </Container>
+          </div>
         </div>
       </Layout>
     );
