@@ -26,15 +26,7 @@ class OrganizerForm extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        <Form.Field required>
-          <label>Agency Name</label>
-          <Input
-            name="agencyOrganizer"
-            placeholder="Pusat Jagaan Orang Kurang Upaya Batu Caves"
-            value={this.props.agencyOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
+
         <Form.Field required>
           <label>Phone Numbers</label>
           <Input

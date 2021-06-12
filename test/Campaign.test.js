@@ -6,10 +6,10 @@ const web3 = new Web3(ganache.provider({ gasLimit: 10000000 }));
 const compiledFactory = require("../ethereum/build/CampaignFactory.json");
 const compiledCampaign = require("../ethereum/build/Campaign.json");
 
-let accounts;
-let factory;
-let campaignAddress;
-let test;
+let accounts = [];
+let factory = null;
+let campaignAddress = null;
+let test = null;
 
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
@@ -22,10 +22,21 @@ beforeEach(async () => {
       gas: "10000000"
     });
 
-  await factory.methods.createCampaign("100").send({
-    from: accounts[0],
-    gas: "10000000"
-  });
+  await factory.methods
+    .createCampaign(
+      "200",
+      "Megat Heikal",
+      "027434233",
+      "Kuala Lumpur",
+      "asdqw@gmail.com",
+      "www.facebook.com",
+      "Sedekah la",
+      "naik kereta pergi ke kedai, kedai tutup hehehe"
+    )
+    .send({
+      from: accounts[0],
+      gas: "10000000"
+    });
 
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
 
@@ -46,61 +57,9 @@ describe("Campaigns", () => {
     assert.equal(accounts[0], organiser);
   });
 
-  it("set a target donation", async () => {
-    const target = await campaign.methods
-      .setTargetdonation(100)
-      .send({ from: accounts[0], gas: 1000000 });
-    assert(target);
-  });
-
-  it("set the info of organiser", async () => {
-    const infosOrgnsr = await campaign.methods
-      .setOrganiser(
-        "Megat Heikal",
-        "Myeg",
-        "017-5342298",
-        "Ipoh Perak",
-        "nasi@gmail.com",
-        "@mgaat.hkl"
-      )
-      .send({ from: accounts[0], gas: 1000000 });
-    assert(infosOrgnsr);
-  });
-
-  it("set the info of reference", async () => {
-    const infosReference = await campaign.methods
-      .setReference(
-        "Muhd Rizqin",
-        "Tidur",
-        "013-52901882",
-        "power123@gmail.com",
-        "@qin.kun"
-      )
-      .send({ from: accounts[0], gas: 1000000 });
-    assert(infosReference);
-  });
-
-  it("set the detail of campaign", async () => {
-    const detailCampgn = await campaign.methods
-      .setDetail("Jalan-Jalan", "Hidup ini cuma sekali")
-      .send({ from: accounts[0], gas: 1000000 });
-    assert(detailCampgn);
-  });
-
-  it("get a target donation", async () => {
-    const target = await campaign.methods.targetDonation().call();
-    assert(target);
-  });
   it("get the info of organiser", async () => {
     const infosOrgnsr = await campaign.methods.getOrganiser(accounts[0]).call();
     assert(infosOrgnsr);
-  });
-
-  it("get the info of reference", async () => {
-    const infosReference = await campaign.methods
-      .getReference(accounts[0])
-      .call();
-    assert(infosReference);
   });
 
   it("get the detail of campaign", async () => {
@@ -110,7 +69,7 @@ describe("Campaigns", () => {
   it("allows people to donate money to the campaign and mark them as approvers", async () => {
     await campaign.methods.donate().send({
       from: accounts[1],
-      value: 200
+      value: 400
     });
 
     const money = await campaign.methods.minimumDonation().call();
@@ -121,16 +80,17 @@ describe("Campaigns", () => {
 
   it("requires a minimum donation", async () => {
     try {
-      await campaign.methods
-        .contribute()
-        .send({ from: accounts[1], value: 20 });
+      await campaign.methods.donate().send({ from: accounts[1], value: 20 });
       assert(false);
     } catch (e) {
       assert(e);
     }
   });
-
   it("allows manager to make payment requests", async () => {
+    await campaign.methods.donate().send({
+      from: accounts[1],
+      value: 400
+    });
     await campaign.methods.createRequest("Samosa", 100, accounts[1]).send({
       from: accounts[0],
       gas: 1000000

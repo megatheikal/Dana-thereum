@@ -10,11 +10,11 @@ contract CampaignFactory {
     address[] public deployedCampaigns;
     address public lastDeployedCampaign;
 
-    function createCampaign(uint minimum) public {
-        address newCampaign = address (new Campaign(minimum, msg.sender));
-        deployedCampaigns.push(newCampaign);
-        lastDeployedCampaign = newCampaign;
-    }
+ function createCampaign(uint256  minimumn, string memory orgName, string memory orgPhone, string memory orgAddress, string memory orgEmail, string memory orgLink,  string memory campName, string memory campSummary) public {
+     address newCampaign = address (new Campaign(minimumn, msg.sender, orgName, orgPhone, orgAddress, orgEmail, orgLink,  campName,  campSummary));
+     deployedCampaigns.push(newCampaign);
+     lastDeployedCampaign = newCampaign;
+ }
 
     function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
@@ -31,31 +31,20 @@ contract Campaign {
    address public organiser;
    mapping (address => bool) public donater;
    uint256 public minimumDonation;
-   uint256 public targetDonation;
    uint256 public donaterCount;
    mapping (address => Infoorganiser) public infoOrganiser;
-   mapping (address => Inforeference) public  infoReference;
    mapping (address => Detail) public detailCampaign;
 
 
    //Detail of organiser
    struct Infoorganiser{
        string name;
-       string agencyName;
        string phoneNumbers;
        string addr;
        string email;
        string linkSocialmedia;
    }
 
-   //detail of organiser's reference
-   struct Inforeference{
-       string name;
-       string phoneNumbers;
-       string addr;
-       string email;
-       string linkSocialmedia;
-   }
 
    //detail of campaign
    struct Detail{
@@ -74,7 +63,7 @@ contract Campaign {
     }
 
     mapping (uint => Request) public requests;
-    uint private requestCount = 0;
+    uint  public requestCount=0 ;
 
 
    modifier restricted(){
@@ -83,15 +72,14 @@ contract Campaign {
    }
 
 
-   constructor (uint minimum, address creator) {
-       organiser = creator;
-       minimumDonation=minimum;
-   }
+ constructor (uint256  minimum, address  creator,string memory orgName, string memory orgPhone, string memory orgAddress, string memory orgEmail, string memory orgLink, string memory campName, string memory campSummary) {
+    organiser = creator;
+    minimumDonation=minimum;
+    infoOrganiser[creator]=Infoorganiser(orgName, orgPhone, orgAddress, orgEmail, orgLink);
+    detailCampaign[creator] = Detail(campName,campSummary);
+}
 
 
-   function setTargetdonation(uint target) public {
-       targetDonation= target;
-   }
 
 
    function donate() public payable{
@@ -103,30 +91,14 @@ contract Campaign {
 
    }
 
-   function setOrganiser(string memory _name, string memory _agencyName, string memory _phoneNumbers, string memory _addr, string memory _email, string memory _linkSocialmedia) public restricted{
-        infoOrganiser[msg.sender]=Infoorganiser(_name,_agencyName,_phoneNumbers,_addr,_email,_linkSocialmedia);
-   }
 
-   function getOrganiser(address addr) public view returns(string memory, string memory, string memory , string memory , string memory , string memory ){
+   function getOrganiser(address addr) public view returns(string memory, string memory , string memory , string memory , string memory ){
        Infoorganiser memory info = infoOrganiser[addr];
-        return (info.name, info.agencyName, info.phoneNumbers,info.addr,info.email, info.linkSocialmedia);
-   }
-
-
-   function setReference(string memory _name, string memory _phoneNumbers,string memory _addr, string memory _email, string memory _linkSocialmedia) public restricted {
-       infoReference[msg.sender] = Inforeference(_name,_phoneNumbers,_addr,_email,_linkSocialmedia);
-   }
-
-    function getReference(address addr) public view returns(string memory, string memory, string memory , string memory , string memory ){
-       Inforeference memory info = infoReference[addr];
         return (info.name, info.phoneNumbers,info.addr,info.email, info.linkSocialmedia);
    }
 
 
 
-   function setDetail(string memory _campaignName, string memory _summaryCampaign) public restricted{
-       detailCampaign[msg.sender] = Detail(_campaignName,_summaryCampaign);
-   }
 
     function getDetail(address addr) public view returns(string memory, string memory){
       Detail memory info = detailCampaign[addr];
@@ -134,6 +106,7 @@ contract Campaign {
    }
 
     function createRequest(string memory description, uint value, address payable recipient) payable public restricted {
+        require(value <= address(this).balance);
         Request storage newRequestInStorage = requests[requestCount];
         newRequestInStorage.description = description;
         newRequestInStorage.value = value;
@@ -171,13 +144,5 @@ contract Campaign {
           organiser
           );
       }
-
-
-
-
-
-
-
-
 
 }

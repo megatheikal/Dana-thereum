@@ -60,7 +60,7 @@ class DonateForm extends Component {
             size="huge"
           />
           <Message
-            visible={this.state.show}
+            hidden={this.state.show}
             error
             header="Sorry..."
             content={this.state.errorMessage}
