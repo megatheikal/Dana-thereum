@@ -17,52 +17,51 @@ class OrganizerForm extends Component {
   render() {
     return (
       <div>
-        <Form.Field required>
-          <label>Name</label>
-          <Input
-            name="nameOrganizer"
-            placeholder="Luqman Nadzri"
-            value={this.props.nameOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-
-        <Form.Field required>
-          <label>Phone Numbers</label>
-          <Input
-            name="phoneOrganizer"
-            placeholder="+60173421122"
-            value={this.props.phoneOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field required>
-          <label>Address</label>
-          <Input
-            name="addressOrganizer"
-            placeholder="No3 Jalan Gombak, Gombak"
-            value={this.props.addressOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field required>
-          <label>Email</label>
-          <Input
-            name="emailOrganizer"
-            placeholder="ali812@gmail.com"
-            value={this.props.emailOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field required>
-          <label>Link of Social media</label>
-          <Input
-            name="linkOrganizer"
-            placeholder="twitter, instagram, facebook"
-            value={this.props.linkOrganizer}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
+        <Form.Input
+          required
+          label="Name"
+          name="nameOrganizer"
+          placeholder="Luqman Nadzri"
+          value={this.props.nameOrganizer}
+          onChange={this.handleChange}
+          error={this.props.errorName}
+        />
+        <Form.Input
+          required
+          label="Phone Numbers"
+          name="phoneOrganizer"
+          placeholder="+60173421122"
+          value={this.props.phoneOrganizer}
+          onChange={this.handleChange}
+          error={this.props.errorPhone}
+        />
+        <Form.Input
+          required
+          label="Address"
+          name="addressOrganizer"
+          placeholder="No3 Jalan Gombak, Gombak"
+          value={this.props.addressOrganizer}
+          onChange={this.handleChange}
+          error={this.props.errorAddress}
+        />
+        <Form.Input
+          required
+          label="Email"
+          name="emailOrganizer"
+          placeholder="ali812@gmail.com"
+          value={this.props.emailOrganizer}
+          onChange={this.handleChange}
+          error={this.props.errorEmail}
+        />
+        <Form.Input
+          required
+          label="Link of Social media"
+          name="linkOrganizer"
+          placeholder="https://www.facebook.com/tabularq"
+          value={this.props.linkOrganizer}
+          onChange={this.handleChange}
+          error={this.props.errorLink}
+        />
       </div>
     );
   }

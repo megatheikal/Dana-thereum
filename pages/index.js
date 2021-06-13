@@ -46,7 +46,7 @@ class CampaignIndex extends Component {
               src="/cover-photo.jpg"
               layout="fill"
               objectFit="cover"
-              quality={100}
+              quality={10}
             />
           </div>
           <Link route="/campaigns/new">

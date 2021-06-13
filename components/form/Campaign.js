@@ -14,19 +14,21 @@ class CampaignDetailForm extends Component {
       [e.target.name]: value
     });
   }
+
   render() {
     return (
       <div>
-        <Form.Field required>
-          <label>Name of Campaign</label>
-          <Input
-            name="campaignName"
-            placeholder="Derma Kilat Kedai Burger Saman 50k...."
-            value={this.props.campaignName}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
-        <Form.Field required>
+        <Form.Input
+          required
+          label="Name of Campaign"
+          name="campaignName"
+          placeholder="Derma Kilat Kedai Burger Saman 50k...."
+          value={this.props.campaignName}
+          onChange={this.handleChange}
+          error={this.props.errorCampaign}
+        />
+
+        <Form.Field required error={this.props.errorMin}>
           <label>Minimum Donation</label>
           <Input
             name="campaignMinimum"
@@ -36,15 +38,16 @@ class CampaignDetailForm extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        <Form.Field>
-          <label>Summary of Campaign</label>
-          <TextArea
-            name="campaignSummary"
-            style={{ height: "300px" }}
-            value={this.props.campaignSummary}
-            onChange={this.handleChange}
-          />
-        </Form.Field>
+
+        <Form.TextArea
+          required
+          label="Summary of Campaign"
+          name="campaignSummary"
+          style={{ height: "300px" }}
+          value={this.props.campaignSummary}
+          onChange={this.handleChange}
+          error={this.props.errorSummary}
+        />
       </div>
     );
   }
