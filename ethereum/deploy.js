@@ -3,7 +3,7 @@ const Web3 = require("web3");
 const compiledFactory = require("./build/CampaignFactory.json");
 
 const provider = new HDWalletProvider(
-  "bulk amount prison husband side prefer habit advice depart satoshi push century",
+  "# PUT YOUR OWN SECRET RECOVERY PHRASE OF METAMASK",
   "https://rinkeby.infura.io/v3/5a730e2a0e3c41b58edc4ff8ed27c4e8"
 );
 
