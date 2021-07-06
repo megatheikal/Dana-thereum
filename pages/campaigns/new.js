@@ -109,9 +109,15 @@ class CampaignNew extends Component {
       errorSummary: false
     });
     let validate = true;
+
+    if (!this.state.nameOrganizer) {
+      this.setState({ errorName: "Write name" });
+      validate = false;
+    }
     if (typeof this.state.nameOrganizer !== "undefined") {
-      if (!this.state.nameOrganizer.match(/^[a-zA-Z]+$/)) {
-        this.setState({ errorName: "Write a name properly" });
+      var pattern = new RegExp(/^(?![\s.]+$)[a-zA-Z\s.]*$/);
+      if (!pattern.test(this.state.nameOrganizer)) {
+        this.setState({ errorName: "Write characters only for properly" });
         validate = false;
       }
     }

@@ -39,7 +39,7 @@ class CampaignIndex extends Component {
       <Layout>
         <div className={cover}>
           <h1>
-            A new way to <span style={{ color: "#c6a551" }}>donate</span> people
+            A new way to <span style={{ color: "#f5cb64" }}>help</span> people
           </h1>
           <div className={image}>
             <Image
@@ -57,6 +57,7 @@ class CampaignIndex extends Component {
                   fontSize: "40px",
                   padding: "0px",
                   backgroundColor: "#c6a551",
+                  color: "white",
                   position: "absolute",
                   width: "443px",
                   height: "106px",
@@ -64,7 +65,6 @@ class CampaignIndex extends Component {
                   top: "617px",
                   borderRadius: "61px"
                 }}
-                icon="add circle"
               />
             </a>
           </Link>
@@ -85,7 +85,7 @@ class CampaignIndex extends Component {
 
         <div className={list}>
           <Header size="huge" style={{ paddingTop: "20px" }}>
-            List of campaigns on Danathereum
+            List of campaign addresses on Dana-thereum
           </Header>
           <div>
             <Grid columns={1}>

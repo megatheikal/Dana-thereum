@@ -29,7 +29,7 @@ class Detail extends Component {
       },
       {
         header: organizer,
-        meta: "Address of manager",
+        meta: "Address of organiser",
         description: (
           <List>
             <List.Item icon="user" content={Orgname} />

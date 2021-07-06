@@ -5,39 +5,37 @@ import Campaign from "../ethereum/campaign";
 
 class RequestRow extends Component {
   state = {
-    loading: false,
+    loadingapp: false,
+    loadingfinal: false,
     errorMessage: "",
     show: true
   };
   onApprove = async () => {
     try {
-      this.setState({ errorMessage: "", show: true });
+      this.setState({ errorMessage: "", show: true, loadingapp: true });
       const campaign = Campaign(this.props.address);
       const accounts = await web3.eth.getAccounts();
       await campaign.methods
         .approvalRequest(this.props.id)
         .send({ from: accounts[0] });
-
-      this.setState({ loading: true });
     } catch (e) {
       this.setState({ errorMessage: e.message, show: false });
     }
-    this.setState({ loading: false });
+    this.setState({ loadingapp: false });
   };
 
   onFinalize = async () => {
     try {
-      this.setState({ errorMessage: "", show: true });
+      this.setState({ errorMessage: "", show: true, loadingfinal: true });
       const campaign = Campaign(this.props.address);
       const accounts = await web3.eth.getAccounts();
       await campaign.methods
         .finaliseRequest(this.props.id)
         .send({ from: accounts[0] });
-      this.setState({ loading: true });
     } catch (e) {
       this.setState({ errorMessage: e.message, show: false });
     }
-    this.setState({ loading: false });
+    this.setState({ loadingfinal: false });
   };
   render() {
     const { request, id, approversCount } = this.props;
@@ -56,7 +54,12 @@ class RequestRow extends Component {
         </Table.Cell>
         <Table.Cell>
           {request.complete ? null : (
-            <Button color="green" basic onClick={this.onApprove}>
+            <Button
+              color="green"
+              basic
+              onClick={this.onApprove}
+              loading={this.state.loadingapp}
+            >
               Approve
             </Button>
           )}
@@ -67,7 +70,7 @@ class RequestRow extends Component {
               color="teal"
               basic
               onClick={this.onFinalize}
-              loading={this.state.loading}
+              loading={this.state.loadingfinal}
             >
               Finalize
             </Button>

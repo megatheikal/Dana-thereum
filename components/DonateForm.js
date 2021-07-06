@@ -8,14 +8,14 @@ class DonateForm extends Component {
     donation: "",
     loading: false,
     errorMessage: "",
-    show: false
+    show: true
   };
 
   onSubmit = async event => {
     event.preventDefault();
     const campaign = Campaign(this.props.address);
 
-    this.setState({ loading: true, errorMessage: "", show: false });
+    this.setState({ loading: true, errorMessage: "", show: true });
 
     try {
       const accounts = await web3.eth.getAccounts();
@@ -24,7 +24,7 @@ class DonateForm extends Component {
         value: web3.utils.toWei(this.state.donation, "ether")
       });
     } catch (error) {
-      this.setState({ errorMessage: error.message, show: true });
+      this.setState({ errorMessage: error.message, show: false });
     }
 
     this.setState({ loading: false, donation: "" });
@@ -59,13 +59,13 @@ class DonateForm extends Component {
             loading={this.state.loading}
             size="huge"
           />
-          <Message
-            hidden={this.state.show}
-            error
-            header="Sorry..."
-            content={this.state.errorMessage}
-          />
         </Form>
+        <Message
+          hidden={this.state.show}
+          error
+          header="Sorry..."
+          content={this.state.errorMessage}
+        />
       </div>
     );
   }
