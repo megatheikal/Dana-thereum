@@ -27,13 +27,6 @@ Type the following in the command line / terminal
 3. To install app dependencies: `npm install`
 4. To start and launch project: `npm run dev`
 
-### Testing the contracts locally
-
-1. To run a local blockchain to test the contracts: `truffle develop`
-2. To compile, in the truffle console type: `compile`
-3. To migrate the contracts on the blockchain: `migrate`. Use `migrate --reset` in case of error.
-4. To test, type: `test`
-
 ### Author
 
 [Megat Heikal](https://github.com/megatheikal)
